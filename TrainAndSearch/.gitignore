@@ -1,4 +1,3 @@
 src/config
 .env
-src/models/train.js
 node_modules

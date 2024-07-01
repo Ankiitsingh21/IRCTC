@@ -1,35 +1,38 @@
-import CityRepository from '../repository/city-repository.js';
+import TrainRepository from "../repository/train-repository.js";
 
-class CityService{
-
+class TrainService{
         constructor(){
-                this.cityRepository = new CityRepository();
+                this.trainRepository = new TrainRepository();
         }
 
-        async createCity(name){
+        async createTrain(data){
                 try {
-                        const city = this.cityRepository.create({name});
-                        return city;
+                        const train = await this.trainRepository.create({  
+                                name: data.name,
+                                capacity: data.number
+                        });
+                        return train;
+                } catch (error) {
+                        console.log("Something went wrong in service layer");
+                        console.log(error);
+                        throw {error};
+                }
+        }
+
+        async deleteTrain(id){
+                try {
+                        const train = this.trainRepository.delete(id);
+                        return train;
                 } catch (error) {
                         console.log("Something went wrong in Service layer");
                         console.log(error);
                 }
         }
 
-        async deleteCity(id){
-                try {
-                        const city = this.cityRepository.delete(id);
-                        return city;
-                } catch (error) {
-                        console.log("Something went wrong in Service layer");
-                        console.log(error);
-                }
-        }
-
-        async updateCity(id,data){
+        async updateTrain(id,data){
                 try {
                         //console.log("service layer"+id,data);
-                        const city = this.cityRepository.update(id,data);
+                        const city = this.trainRepository.update(id,data);
                         //console.log(city.data);
                         return city;
                 } catch (error) {
@@ -40,7 +43,7 @@ class CityService{
 
         async getAll(){
                 try {
-                        const city= this.cityRepository.getAll();
+                        const city= this.trainRepository.getAll();
                         return city;
                 } catch (error) {
                         console.log("Something went wrong in Service layer");
@@ -48,9 +51,9 @@ class CityService{
                 }
         }
 
-        async getCityById(id){
+        async getTrainById(id){
                 try {
-                        const city= this.cityRepository.get(id);
+                        const city= this.trainRepository.get(id);
                         return city;
                 } catch (error) {
                         console.log("Something went wrong in Service layer");
@@ -59,4 +62,4 @@ class CityService{
         }
 }
 
-export default CityService;
+export default TrainService;
