@@ -32,9 +32,9 @@ class TrainService{
         async updateTrain(id,data){
                 try {
                         //console.log("service layer"+id,data);
-                        const city = this.trainRepository.update(id,data);
-                        //console.log(city.data);
-                        return city;
+                        const train = this.trainRepository.update(id,data);
+                        //console.log(train.data);
+                        return train;
                 } catch (error) {
                         console.log("Something went wrong in Service layer");
                         console.log(error);
@@ -43,8 +43,8 @@ class TrainService{
 
         async getAll(){
                 try {
-                        const city= this.trainRepository.getAll();
-                        return city;
+                        const train= this.trainRepository.getAll();
+                        return train;
                 } catch (error) {
                         console.log("Something went wrong in Service layer");
                         console.log(error);
@@ -53,8 +53,19 @@ class TrainService{
 
         async getTrainById(id){
                 try {
-                        const city= this.trainRepository.get(id);
-                        return city;
+                        const train= this.trainRepository.get(id);
+                        return train;
+                } catch (error) {
+                        console.log("Something went wrong in Service layer");
+                        console.log(error);
+                }
+        }
+
+        async getTrainByName(data){
+                try {
+                        const name = data.name;
+                        const train= this.trainRepository.getTrainByName(name);
+                        return train;
                 } catch (error) {
                         console.log("Something went wrong in Service layer");
                         console.log(error);

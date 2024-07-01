@@ -114,3 +114,26 @@ export const getTrainStationById= async (req,res)=>{
                 })
         }
 }
+
+export const getTrainStationByName= async (req,res)=>{
+        try {
+                //console.log(req.body.id,req.body.name);
+                const response = await trainStationService.getTrainStationByName(req.query);
+                //console.log(response);
+                return res.status(200).json({
+                        success : true,
+                        message : "all  train Station",
+                        data: response,
+                        err : {}
+                })
+        } catch (error) {
+                console.log(error);
+                //throw {error};
+                return res.status(401).json({
+                        success : false,
+                        message : "not able to get all train",
+                        data: {},
+                        err : {error},
+                })
+        }
+}

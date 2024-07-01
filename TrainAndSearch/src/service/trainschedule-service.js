@@ -1,24 +1,36 @@
 import TrainScheduleRepository from "../repository/trainschedule-repository.js"
 import TrainRepository from "../repository/train-repository.js";
+import TrainStationRepository from "../repository/TrainStation-repository.js";
 
 class TrainScheduleService{
         constructor(){
                 this.trainScheduleRepository = new TrainScheduleRepository();
                 this.trainRepository = new TrainRepository();
+                this.trainStationRepository = new TrainStationRepository();
         }
 
         async createTrainSchedules(data){
                 try {
-                        const seats = await this.trainRepository.get(data.trainid);
+                        // const seats = await this.trainRepository.get(data.trainid);
+                        // console.log(seats);
+                        const trainId= await this.trainRepository.getTrainByName(data.trainname);
+                        //console.log(trainId[0]._id);
+                        //const departurename=data.departurestationname;
+                        //console.log(data.departurestationname);
+                        const departurestationid = await this.trainStationRepository.getStationWithName(data.departurestationname);
+                        //console.log(departurestationid[0]._id);
+                        //console.log("hi");
+                        //const arrivalname=data.arrivalstationname;
+                        const arrivalstationid = await this.trainStationRepository.getStationWithName(data.arrivalstationname);
                         const train = await this.trainScheduleRepository.create({  
                                 trainnumber : data.trainnumber,
-                                trainid : data.trainid,
-                                departurestationid : data.departurestationid,
-                                arrivalstationid : data.arrivalstationid,
+                                trainid : trainId[0]._id,
+                                departurestationid : departurestationid[0]._id,
+                                arrivalstationid : arrivalstationid[0]._id,
                                 arrivaltime : data.arrivaltime,
                                 departuretime : data.departuretime,
                                 price : data.price,
-                                totalseats : seats.capacity
+                                totalseats : trainId[0].capacity
                         });
                         return train;
                 } catch (error) {

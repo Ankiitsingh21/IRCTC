@@ -61,6 +61,17 @@ class TrainStationService{
                         console.log(error);
                 }
         }
+
+        async getTrainStationByName(data){
+                try {
+                        const name = data.name;
+                        const city= this.trainStationRepository.getStationWithName(name);
+                        return city;
+                } catch (error) {
+                        console.log("Something went wrong in Service layer");
+                        console.log(error);
+                }
+        }
 }
 
 export default TrainStationService;
