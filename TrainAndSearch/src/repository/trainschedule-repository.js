@@ -24,7 +24,7 @@ class TrainScheduleRepository extends CrudRepository{
                         filter.price = {$gte: data.minPrice};
                 }
                 if(data.maxPrice){
-                        data.price = {$lte: data.maxPrice};
+                        filter.price = {$lte: data.maxPrice};
                 }
                 return filter;
         }
